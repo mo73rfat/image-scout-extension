@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Image Scout – Click to Inspect & Download",
+    "name": "Image Scout",
     "description": "Click any image to see dimensions, file size/type, and download in a custom size.",
     "version": "1.0.0",
     "action": 
