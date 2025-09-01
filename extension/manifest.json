@@ -1,16 +1,11 @@
 {
     "manifest_version": 3,
     "name": "Image Scout",
-    "description": "Click any image to see dimensions, file size/type, and download in a custom size.",
     "version": "1.0.0",
+    "description": "Click any image to see dimensions, type, file size, and download in a chosen format/size.",
     "action": 
     {
-        "default_popup": "popup.html", 
-        "default_title": "Image Scout" 
-    },
-    "background": 
-    { 
-        "service_worker": "background.js" 
+        "default_title": "Image Scout"
     },
     "permissions": 
     [
@@ -20,11 +15,23 @@
         "storage"
     ],
     "host_permissions": 
-    ["*://*/*"],
+    [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "background": 
+    {
+        "service_worker": "background.js",
+        "type": "module"
+    },
     "icons": 
     {
         "16": "icons/16.png",
         "48": "icons/48.png",
         "128": "icons/128.png"
+    },
+    "content_security_policy": 
+    {
+        "extension_pages": "script-src 'self'; object-src 'self';"
     }
 }
