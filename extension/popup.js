@@ -10,10 +10,8 @@ const els =
     fsize: document.getElementById('fsize'),
     outW: document.getElementById('outW'),
     outH: document.getElementById('outH'),
-    lock: document.getElementById('lock'),
     format: document.getElementById('format'),
     quality: document.getElementById('quality'),
-    fname: document.getElementById('fname'),
     download: document.getElementById('download')
 };
 
@@ -74,20 +72,11 @@ function updateUI()
     if (selection.naturalWidth && !els.outW.value) els.outW.value = selection.naturalWidth;
     if (selection.naturalHeight && !els.outH.value) els.outH.value = selection.naturalHeight;
 
-    if (!els.fname.value) 
-    {
-        const u = new URL(selection.src, location.href);
-        const last = (u.pathname.split('/').pop() || 'image').split('?')[0];
-        els.fname.value = last || 'image.jpg';
-    }
-
     els.ctype.value = meta.type || '—';
     els.fsize.value = bytesToHuman(meta.size);
 }
 function syncAspect(source) 
 {
-    if (!els.lock.checked || !naturalRatio) 
-        return;
     if (source === 'W' && els.outW.value) 
         els.outH.value = Math.round(Number(els.outW.value) / naturalRatio);
     else if (source === 'H' && els.outH.value) 
