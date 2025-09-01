@@ -4,6 +4,9 @@
 
 Built with **Manifest V3**, lightweight and easy to use.
 
+| ![Img1](./extension/assets/1.png) | ![Img2](./extension/assets/2.png) | ![Img3](./extension/assets/3.png) | ![Img4](./extension/assets/4.png) |
+|-----------------------------|-----------------------------|-----------------------------|-----------------------------|
+
 ---
 
 ## 🚀 Features
