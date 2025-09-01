@@ -125,48 +125,22 @@ els.outW.addEventListener('input', () => syncAspect('W'));
 els.outH.addEventListener('input', () => syncAspect('H'));
 
 els.download.addEventListener
-('click', async () => 
+(
+    'click', async () => 
     {
         if (!selection?.src) return;
 
-        const res = await fetch(selection.src, { credentials: 'include' });
-        const blob = await res.blob();
+        const urlParts = selection.src.split('/');
+        const originalFile = urlParts[urlParts.length - 1] || 'downloaded-image';
 
-        const bitmap = await createImageBitmap(blob);
-
-        let w = parseInt(els.outW.value || bitmap.width, 10);
-        let h = parseInt(els.outH.value || bitmap.height, 10);
-
-        if (els.lock.checked && naturalRatio) 
-        {
-            if (els.outW.value && !els.outH.value) h = Math.round(w / naturalRatio);
-            if (!els.outW.value && els.outH.value) w = Math.round(h * naturalRatio);
-        }
-
-        const canvas = document.createElement('canvas');
-        canvas.width = Math.max(1, w);
-        canvas.height = Math.max(1, h);
-        const ctx = canvas.getContext('2d');
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-
-        let outType = els.format.value;
-
-        if (outType === 'original' || !/^image\//.test(outType)) 
-        {
-            outType = meta.type || blob.type || 'image/png';
-        }
-
-        const quality = Math.min(1, Math.max(0.1, Number(els.quality.value) || 0.92));
-
-        const outBlob = await new Promise((resolve) => canvas.toBlob(resolve, outType, quality) );
-
-        const url = URL.createObjectURL(outBlob);
-        const filename = els.fname.value?.trim() || 'image-scout-output';
-
-        await chrome.downloads.download({ url, filename, saveAs: true });
-        setTimeout(() => URL.revokeObjectURL(url), 10000);
+        await chrome.downloads.download
+        (
+            {
+                url: selection.src,
+                filename: originalFile, 
+                saveAs: true           
+            }
+        );
     }
 );
 init();
